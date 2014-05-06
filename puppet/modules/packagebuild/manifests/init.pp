@@ -20,7 +20,7 @@ class packagebuild {
   }
 
 
-  $build_utils = [ 'build-essential', 'libpcre3-dev', 'unzip', 'libxml2-dev', 'libxslt1-dev', 'libgd2-xpm-dev', 'libgeoip-dev' ]
+  $build_utils = [ 'build-essential', 'libpcre3-dev', 'unzip', 'libxml2-dev', 'libxslt1-dev', 'libgd2-xpm-dev', 'libgeoip-dev', 'python-setuptools' ]
 
   package { $build_utils:
     ensure  => latest,
