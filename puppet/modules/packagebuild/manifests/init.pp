@@ -1,6 +1,18 @@
 # install and configure fpm for the building of RPMS
 class packagebuild {
 
+  file { '/opt':
+    ensure => directory,
+    owner  => vagrant,
+    group  => vagrant,
+  }
+
+  file { '/var/cache/omnibus':
+    ensure => directory,
+    owner  => vagrant,
+    group  => vagrant,
+  }
+
   $ruby_pkgs = [ 'ruby1.9.1-dev', 'ruby1.9.1', 'rubygems', 'ruby-rvm' ]
 
   package { $ruby_pkgs:
