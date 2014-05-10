@@ -5,18 +5,32 @@ class packagebuild {
 
   package { $ruby_pkgs:
     ensure => latest,
+    notify => Exec['update-ruby'],
+  }
+
+  # Omnibus requires ruby 1.9 or later
+  exec { 'update-ruby':
+    refreshonly => true,
+    command     => '/usr/sbin/update-alternatives --set ruby /usr/bin/ruby1.9.1 ; /usr/sbin/update-alternatives --set gem /usr/bin/gem1.9.1 ',
+    user        => "root",
   }
 
   package { 'fpm':
     ensure   => latest,
     provider => gem,
-    require  => Package[$ruby_pkgs],
+    require  => [ Package[$ruby_pkgs], Exec['update-ruby'] ],
+  }
+
+  package { 'omnibus':
+    ensure   => latest,
+    provider => gem,
+    require  => [ Package[$ruby_pkgs], Exec['update-ruby'] ],
   }
 
   package { 'bundler':
     ensure   => latest,
     provider => gem,
-    require  => Package[$ruby_pkgs],
+    require  => [ Package[$ruby_pkgs], Exec['update-ruby'] ],
   }
 
 
